@@ -60,7 +60,7 @@ TEST(QuickSort, TwoElementsEqual) {
     EXPECT_TRUE(std::ranges::is_sorted(d)) << std::format("{}", d);
 }
 
-TEST(QuickSort, RelativelyLongUnsortedSequence) {
+TEST(QuickSort, UnsortedSequenceLessThanThreshold) {
     // Assign
     std::deque<int> d{-5, 1, 12, 2, 8, 9, 5, 8, 11, -12, 37, 42, 1, 35};
 
@@ -71,9 +71,34 @@ TEST(QuickSort, RelativelyLongUnsortedSequence) {
     EXPECT_TRUE(std::ranges::is_sorted(d)) << std::format("{}", d);
 }
 
-TEST(QuickSort, RelativelyLongUnsortedSequenceWithOtherComparator) {
+TEST(QuickSort, UnsortedSequenceLessThanThresholdWithOtherComparator) {
     // Assign
     std::deque<int> d{-5, 1, 12, 2, 8, 9, 5, 8, 11, -12, 37, 42, 1, 35};
+    std::greater cmp;
+
+    // Act
+    dts::sort(d.begin(), d.end(), cmp);
+
+    // Assert
+    EXPECT_TRUE(std::ranges::is_sorted(d, cmp)) << std::format("{}", d);
+}
+
+TEST(QuickSort, UnsortedSequence) {
+    // Assign
+    std::deque<int> d{-5, 1,  12,  2,   8,  9,  5,   8, 11, -12, 37,  42,
+                      1,  35, 104, 213, 25, 84, -72, 0, 29, 31,  1058};
+
+    // Act
+    dts::sort(d.begin(), d.end());
+
+    // Assert
+    EXPECT_TRUE(std::ranges::is_sorted(d)) << std::format("{}", d);
+}
+
+TEST(QuickSort, UnsortedSequenceWithOtherComparator) {
+    // Assign
+    std::deque<int> d{-5, 1,  12,  2,   8,  9,  5,   8, 11, -12, 37,  42,
+                      1,  35, 104, 213, 25, 84, -72, 0, 29, 31,  1058};
     std::greater cmp;
 
     // Act

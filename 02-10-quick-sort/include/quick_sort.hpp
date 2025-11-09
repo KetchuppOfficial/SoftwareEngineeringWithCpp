@@ -3,11 +3,23 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cstddef>
 #include <iterator>
 
 namespace dts {
 
 namespace detail {
+
+template <std::random_access_iterator It, typename Compare>
+void insertion_sort(It first, It last, Compare comp) {
+    for (auto i = std::next(first); i != last; ++i) {
+        for (auto j = i; j != first; --j) {
+            if (auto before_j = std::prev(j); comp(*j, *before_j)) {
+                std::iter_swap(j, before_j);
+            }
+        }
+    }
+}
 
 template <std::random_access_iterator It, typename Compare>
 It pivot(It first, It last, Compare comp) {
@@ -54,9 +66,14 @@ void sort(It first, It last, Compare comp) {
         return;
     }
 
-    auto q = ::dts::detail::partition(first, last, comp);
-    ::dts::sort(first, q, comp);
-    ::dts::sort(std::next(q), last, comp);
+    constexpr std::ptrdiff_t kQuickSortThreshold = 16;
+    if (std::distance(first, last) >= kQuickSortThreshold) {
+        auto q = ::dts::detail::partition(first, last, comp);
+        ::dts::sort(first, q, comp);
+        ::dts::sort(std::next(q), last, comp);
+    } else {
+        ::dts::detail::insertion_sort(first, last, comp);
+    }
 }
 
 template <std::random_access_iterator It>
