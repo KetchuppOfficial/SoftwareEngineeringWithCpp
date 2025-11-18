@@ -107,3 +107,17 @@ TEST(QuickSort, UnsortedSequenceWithOtherComparator) {
     // Assert
     EXPECT_TRUE(std::ranges::is_sorted(d, cmp)) << std::format("{}", d);
 }
+
+TEST(QuickSort, Strings) {
+    // Assign
+    std::deque<std::string> strings{"lorem",       "ipsum",      "dolor",      "sit",   "amet",
+                                    "consectetur", "adipiscing", "elit",       "sed",   "do",
+                                    "eiusmod",     "tempor",     "incididunt", "ut",    "labore",
+                                    "et",          "dolore",     "magna",      "aliqua"};
+
+    // Act
+    dts::sort(strings.begin(), strings.end());
+
+    // Assert
+    EXPECT_TRUE(std::ranges::is_sorted(strings)) << std::format("{}", strings);
+}
