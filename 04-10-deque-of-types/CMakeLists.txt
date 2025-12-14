@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.20)
+
+project(deque_of_types
+        LANGUAGES CXX)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(${PROJECT_NAME} src/main.cpp)
+target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_compile_options(${PROJECT_NAME}
+PRIVATE
+    $<$<CXX_COMPILER_ID:MSVC>:/Wall>
+    $<$<CXX_COMPILER_ID:GNU,Clang>: -Wall -Wextra -pedantic>
+)
