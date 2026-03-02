@@ -18,6 +18,7 @@
           default = (pkgs.mkShell.override { stdenv = pkgs.gcc15Stdenv; }) {
               buildInputs = with pkgs; [
                   gtest
+                  gbenchmark
               ];
               nativeBuildInputs = with pkgs; [
                   cmake
