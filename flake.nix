@@ -19,6 +19,7 @@
               buildInputs = with pkgs; [
                   gtest
                   gbenchmark
+                  boost
               ];
               nativeBuildInputs = with pkgs; [
                   cmake
