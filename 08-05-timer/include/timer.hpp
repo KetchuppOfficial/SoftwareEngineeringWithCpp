@@ -42,6 +42,6 @@ class Timer {
     std::vector<D> m_intervals;
 };
 
-#endif // INCLUDE_TIMER_HPP
-
 } // namespace dts
+
+#endif // INCLUDE_TIMER_HPP
