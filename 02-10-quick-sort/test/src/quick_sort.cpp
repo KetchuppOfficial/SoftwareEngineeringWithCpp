@@ -95,11 +95,38 @@ TEST(QuickSort, UnsortedSequence) {
     EXPECT_TRUE(std::ranges::is_sorted(d)) << std::format("{}", d);
 }
 
-TEST(QuickSort, UnsortedSequenceWithOtherComparator) {
+TEST(QuickSort, UnsortedSequenceWithStandardComparator) {
     // Assign
     std::deque<int> d{-5, 1,  12,  2,   8,  9,  5,   8, 11, -12, 37,  42,
                       1,  35, 104, 213, 25, 84, -72, 0, 29, 31,  1058};
     std::greater cmp;
+
+    // Act
+    dts::sort(d.begin(), d.end(), cmp);
+
+    // Assert
+    EXPECT_TRUE(std::ranges::is_sorted(d, cmp)) << std::format("{}", d);
+}
+
+static bool greater(int x, int y) noexcept { return x < y; }
+
+TEST(QuickSort, UnsortedSequenceWithFuncComparator) {
+    // Assign
+    std::deque<int> d{-5, 1,  12,  2,   8,  9,  5,   8, 11, -12, 37,  42,
+                      1,  35, 104, 213, 25, 84, -72, 0, 29, 31,  1058};
+
+    // Act
+    dts::sort(d.begin(), d.end(), greater);
+
+    // Assert
+    EXPECT_TRUE(std::ranges::is_sorted(d, greater)) << std::format("{}", d);
+}
+
+TEST(QuickSort, UnsortedSequenceWithLambdaComparator) {
+    // Assign
+    std::deque<int> d{-5, 1,  12,  2,   8,  9,  5,   8, 11, -12, 37,  42,
+                      1,  35, 104, 213, 25, 84, -72, 0, 29, 31,  1058};
+    auto cmp = [](int x, int y) { return x > y; };
 
     // Act
     dts::sort(d.begin(), d.end(), cmp);
