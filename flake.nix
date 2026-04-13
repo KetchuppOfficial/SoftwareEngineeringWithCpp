@@ -20,6 +20,7 @@
                   gtest
                   gbenchmark
                   boost
+                  cli11
               ];
               nativeBuildInputs = with pkgs; [
                   cmake
